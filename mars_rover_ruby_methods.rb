@@ -1,11 +1,11 @@
 class MarsMission # MAIN CLASS TO START THE MISSION
 	DIRECTIONS = ["N", "E", "S", "W"]
+
 	def initialize(x_upper, y_upper)
-		@rovers = []
 		@plateau = [x_upper, y_upper]
 	end
 
-	def init_rovers(x, y, head, controls) #INIT ROVER OBJECTS
+	def init_rovers(x, y, head, controls) #INIT ROVER INFO IN HASH
 		return { x: x, y: y, direction: head, controls: controls.split("") }
 	end
 
@@ -16,7 +16,7 @@ class MarsMission # MAIN CLASS TO START THE MISSION
 		return "#{rover[:x]}, #{rover[:y]}, #{rover[:direction]}"
 	end
 
-	def update_position(rover, current_control) # UPDATE ROVER's POSITION BASED ON STRING SENT BY NASA
+	def update_position(rover, current_control) # UPDATE ROVER's POSITION BASED ON STRING SENT BY NASA :D
 		change_direction(rover, true) if current_control ==  "R"
 		change_direction(rover, false) if current_control ==  "L"
 		move_rover(rover) if current_control ==  "M"
@@ -25,12 +25,12 @@ class MarsMission # MAIN CLASS TO START THE MISSION
 	def change_direction(rover, clockwise) # ROTATE ROVER BASED ON STRING SENT BY NASA
 		direction_hash = Hash[DIRECTIONS.map.with_index.to_a]
 		index = direction_hash[rover[:direction]]
-		if clockwise #If "L" Move Rover anti clockwise in the direction
+		if clockwise #If "L", Move Rover anti clockwise in the direction, otherwise clockwise
 			index = (index.next == DIRECTIONS.size) ? 0 : index.next  # Reset index to 0 if it is the last element
 		else
 			index = (index == 0) ? (DIRECTIONS.size - 1) : index - 1
 		end
-		rover[:direction] = DIRECTIONS[index]
+		rover[:direction] = DIRECTIONS[index] #Set New direction of the rover
 		return DIRECTIONS[index]
 	end
 
@@ -41,9 +41,11 @@ class MarsMission # MAIN CLASS TO START THE MISSION
 		when "S" then rover[:y] -= 1
 		when "W" then rover[:x] -= 1
 		end
+
 		x_crossed = rover[:x] > @plateau[0] || rover[:x] < 0
 		y_crossed = rover[:y] > @plateau[1] || rover[:y] < 0 
-		raise "Rover moved out of the plane plateu" if x_crossed || y_crossed
+		raise "Rover moved out of the plane plateu" if (x_crossed || y_crossed)
+
 		return "#{rover[:x]}, #{rover[:y]}"
 	end
 end
