@@ -23,8 +23,11 @@ class MarsMission # MAIN CLASS TO START THE MISSION
 	end
 
 	def change_direction(rover, clockwise) # ROTATE ROVER BASED ON STRING SENT BY NASA :D
+		# Getting index value of each direction value. 
+		#Then change the index to next/prev index to point it to relevent direction
 		direction_hash = Hash[DIRECTIONS.map.with_index.to_a]
-		index = direction_hash[rover[:direction]]
+		index = direction_hash[rover[:direction]] # Get index of current direction of the rover
+
 		if clockwise #If "L", Move Rover anti clockwise in the direction, otherwise clockwise
 			index = (index.next == DIRECTIONS.size) ? 0 : index.next  # Reset index to 0 if it is the last element
 		else
