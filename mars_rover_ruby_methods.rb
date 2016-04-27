@@ -22,7 +22,7 @@ class MarsMission # MAIN CLASS TO START THE MISSION
 		move_rover(rover) if current_control ==  "M"
 	end
 
-	def change_direction(rover, clockwise) # ROTATE ROVER BASED ON STRING SENT BY NASA
+	def change_direction(rover, clockwise) # ROTATE ROVER BASED ON STRING SENT BY NASA :D
 		direction_hash = Hash[DIRECTIONS.map.with_index.to_a]
 		index = direction_hash[rover[:direction]]
 		if clockwise #If "L", Move Rover anti clockwise in the direction, otherwise clockwise
@@ -34,12 +34,12 @@ class MarsMission # MAIN CLASS TO START THE MISSION
 		return DIRECTIONS[index]
 	end
 
-	def move_rover(rover) #Move the Rover based on its direction
+	def move_rover(rover) #MOVE THE ROVER IN THE HEADING DIRECTION
 		case rover[:direction]
-		when "N" then rover[:y] += 1
-		when "E" then rover[:x] += 1
-		when "S" then rover[:y] -= 1
-		when "W" then rover[:x] -= 1
+			when "N" then rover[:y] += 1
+			when "E" then rover[:x] += 1
+			when "S" then rover[:y] -= 1
+			when "W" then rover[:x] -= 1
 		end
 
 		x_crossed = rover[:x] > @plateau[0] || rover[:x] < 0
